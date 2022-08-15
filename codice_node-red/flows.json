@@ -1,0 +1,718 @@
+[
+    {
+        "id": "2296e757fad8c885",
+        "type": "tab",
+        "label": "robottino",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ccdf8844f105a757",
+        "type": "mqtt out",
+        "z": "2296e757fad8c885",
+        "name": "",
+        "topic": "/avanti",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b20e71974009fe5a",
+        "x": 910,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a43ff5708ae8c3b6",
+        "type": "mqtt out",
+        "z": "2296e757fad8c885",
+        "name": "",
+        "topic": "/destra",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b20e71974009fe5a",
+        "x": 910,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "447996c00b8bb79c",
+        "type": "mqtt out",
+        "z": "2296e757fad8c885",
+        "name": "",
+        "topic": "/sinistra",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b20e71974009fe5a",
+        "x": 920,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "e3559cfad6aba11c",
+        "type": "mqtt in",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "name": "",
+        "topic": "/Ultrasuoni",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "b20e71974009fe5a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 340,
+        "y": 160,
+        "wires": [
+            [
+                "597104b2ff57f494",
+                "eb27d40de950a64b"
+            ]
+        ]
+    },
+    {
+        "id": "40acc463fe384d95",
+        "type": "ui_switch",
+        "z": "2296e757fad8c885",
+        "name": "avanti",
+        "label": "avanti",
+        "tooltip": "",
+        "group": "333a6f68de210d7c",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "A",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [
+                "6f69e5e3c62b12a2",
+                "c095efbebc9fd804",
+                "e2f8f5f33225db93",
+                "52e97e51f6adb7fc",
+                "5946d60dddb08e77"
+            ]
+        ]
+    },
+    {
+        "id": "2b54b60c490365ab",
+        "type": "ui_switch",
+        "z": "2296e757fad8c885",
+        "name": "destra",
+        "label": "destra",
+        "tooltip": "",
+        "group": "92d87d4d9334b07f",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "D",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 490,
+        "y": 500,
+        "wires": [
+            [
+                "af0b322f2375bd2b",
+                "d96c6422f5d3450a",
+                "45f60cb1cc908aad",
+                "303d7361ad5a20a7"
+            ]
+        ]
+    },
+    {
+        "id": "6c1f38967e2a66f3",
+        "type": "ui_switch",
+        "z": "2296e757fad8c885",
+        "name": "sinistra",
+        "label": "sinistra",
+        "tooltip": "",
+        "group": "92d87d4d9334b07f",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "S",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 500,
+        "y": 600,
+        "wires": [
+            [
+                "45f60cb1cc908aad",
+                "303d7361ad5a20a7",
+                "d96c6422f5d3450a",
+                "af0b322f2375bd2b"
+            ]
+        ]
+    },
+    {
+        "id": "af0b322f2375bd2b",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto D",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\nuscita.topic = \"/destra\";\n\ni = flow.get(\"y\") || false;\nj = flow.get(\"u\") || false;\ne = flow.get(\"o\") || false;\n\nif(msg.topic === \"D\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"y\", i);\n    }\n}\nif(msg.topic === \"S\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"u\", j);\n    }\n}\nif(i === true && j === true){\n    ;\n}else{\n    if(e != i){\n        u = i;\n        flow.set(\"o\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 500,
+        "wires": [
+            [
+                "a43ff5708ae8c3b6"
+            ]
+        ]
+    },
+    {
+        "id": "45f60cb1cc908aad",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto S",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\nuscita.topic = \"/sinistra\";\n\ni = flow.get(\"p\") || false;\nj = flow.get(\"a\") || false;\ne = flow.get(\"s\") || false;\n\nif(msg.topic === \"D\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"p\", i);\n    }\n}\nif(msg.topic === \"S\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"a\", j);\n    }\n}\nif(i === true && j === true){\n    ;\n}else{\n    if(e != j){\n        u = j;\n        flow.set(\"s\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}\n/*\nvar q;\nvar w;\nvar e;\nvar uscita1 = {};\nuscita1.topic = \"sinistra\";\n\nq = flow.get(\"q\") || false;\nw = flow.get(\"w\") || false;\ne = flow.get(\"e\") || false;\n\nif(msg.topic === \"D\"){\n    if(q != msg.payload){\n        q  = msg.payload;\n        flow.set(\"q\", q);\n    }\n}\nif(msg.topic === \"S\"){\n    if(w != msg.payload){\n        w  = msg.payload;\n        flow.set(\"w\", w);\n    }\n}\nif(q === true && w === true){\n    if(e === false && w ===true || e === true && w ===true){\n        e = false;\n        flow.set(\"e\", e);\n        uscita1.payload = e;\n        return uscita1;\n    }\n}else{\n    if(e != w){\n        e = w;\n        flow.set(\"e\", e);\n    }\n}*/",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 600,
+        "wires": [
+            [
+                "447996c00b8bb79c"
+            ]
+        ]
+    },
+    {
+        "id": "e416b1fa1bd95eac",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "name": "",
+        "func": "var distanza = {};\ndistanza.payload = msg.payload;\nreturn distanza;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eb27d40de950a64b",
+        "type": "ui_text",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "group": "33bf04ac409b7c6c",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "name": "",
+        "label": "distanza in cm =",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 580,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a12efefdebd43931",
+        "type": "ui_switch",
+        "z": "2296e757fad8c885",
+        "name": "indietro",
+        "label": "indietro",
+        "tooltip": "",
+        "group": "333a6f68de210d7c",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "I",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "e2f8f5f33225db93",
+                "c095efbebc9fd804",
+                "6f69e5e3c62b12a2",
+                "5946d60dddb08e77"
+            ]
+        ]
+    },
+    {
+        "id": "b9d16b096c274855",
+        "type": "mqtt out",
+        "z": "2296e757fad8c885",
+        "name": "",
+        "topic": "/indietro",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b20e71974009fe5a",
+        "x": 920,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "7cd8ba0fa1c42948",
+        "type": "mqtt in",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "name": "/ostacolo",
+        "topic": "/ostacolo",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "b20e71974009fe5a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1100,
+        "y": 80,
+        "wires": [
+            [
+                "ee0ec88934159262",
+                "912a9f1a2a7a9b47"
+            ]
+        ]
+    },
+    {
+        "id": "597104b2ff57f494",
+        "type": "debug",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "name": "ultrasuoni",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "88639ae061106cfb",
+        "type": "debug",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "name": "funzione ultrasuoni",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "ee0ec88934159262",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "name": "",
+        "func": "var ostacolo = {};\nvar stato;\nif (msg.payload === \"false\"){\n    stato = false;\n    ostacolo.payload = stato;\n    return ostacolo;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "10e22a14bf6d15d9",
+        "type": "ui_switch",
+        "z": "2296e757fad8c885",
+        "name": "Stop",
+        "label": "stop",
+        "tooltip": "",
+        "group": "92d87d4d9334b07f",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "ST",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 490,
+        "y": 440,
+        "wires": [
+            [
+                "fa1b791e9664943b"
+            ]
+        ]
+    },
+    {
+        "id": "fa1b791e9664943b",
+        "type": "mqtt out",
+        "z": "2296e757fad8c885",
+        "name": "",
+        "topic": "/stop",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b20e71974009fe5a",
+        "x": 910,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "303d7361ad5a20a7",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto S",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\n//uscita.topic = \"/sinistra\";\n\ni = flow.get(\"p\") || false;\nj = flow.get(\"a\") || false;\ne = flow.get(\"s\") || false;\n\nif(msg.topic === \"D\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"p\", i);\n    }\n}\nif(msg.topic === \"S\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"a\", j);\n    }\n}\nif(i === true && j === true){\n    if(e === false && j ===true){\n        u = false;\n        flow.set(\"s\", u);\n        uscita.payload = u;\n        return uscita;\n    }else{\n        if(e === true && j === true){\n            u = true;\n            flow.set(\"s\", u);\n            uscita.payload = u;\n            return uscita;\n        }\n    }\n}else{\n    if(e != j){\n        u = j;\n        flow.set(\"s\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}\n/*\nvar q;\nvar w;\nvar e;\nvar uscita1 = {};\nuscita1.topic = \"sinistra\";\n\nq = flow.get(\"q\") || false;\nw = flow.get(\"w\") || false;\ne = flow.get(\"e\") || false;\n\nif(msg.topic === \"D\"){\n    if(q != msg.payload){\n        q  = msg.payload;\n        flow.set(\"q\", q);\n    }\n}\nif(msg.topic === \"S\"){\n    if(w != msg.payload){\n        w  = msg.payload;\n        flow.set(\"w\", w);\n    }\n}\nif(q === true && w === true){\n    if(e === false && w ===true || e === true && w ===true){\n        e = false;\n        flow.set(\"e\", e);\n        uscita1.payload = e;\n        return uscita1;\n    }\n}else{\n    if(e != w){\n        e = w;\n        flow.set(\"e\", e);\n    }\n}*/",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 640,
+        "wires": [
+            [
+                "6c1f38967e2a66f3"
+            ]
+        ]
+    },
+    {
+        "id": "d96c6422f5d3450a",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto D",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\n//uscita.topic = \"/destra\";\n\ni = flow.get(\"y\") || false;\nj = flow.get(\"u\") || false;\ne = flow.get(\"o\") || false;\n\nif(msg.topic === \"D\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"y\", i);\n    }\n}\nif(msg.topic === \"S\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"u\", j);\n    }\n}\nif(i === true && j === true){\n    if(e === false && i ===true){\n        u = false;\n        flow.set(\"o\", u);\n        uscita.payload = u;\n        return uscita;\n    }else{\n        if(e === true && i === true){\n            u = true;\n            flow.set(\"o\", u);\n            uscita.payload = u;\n            return uscita;\n        }\n    }\n}else{\n    if(e != i){\n        u = i;\n        flow.set(\"o\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 540,
+        "wires": [
+            [
+                "2b54b60c490365ab"
+            ]
+        ]
+    },
+    {
+        "id": "912a9f1a2a7a9b47",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "d": true,
+        "name": "",
+        "func": "var ostacolo = {};\nvar stato;\nif (msg.payload === \"false\"){\n    stato = true;\n    ostacolo.payload = stato;\n    return ostacolo;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6f69e5e3c62b12a2",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto A",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\nuscita.topic = \"/avanti\";\n\ni = flow.get(\"z\") || false;\nj = flow.get(\"x\") || false;\ne = flow.get(\"c\") || false;\n\nif(msg.topic === \"A\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"z\", i);\n    }\n}\nif(msg.topic === \"I\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"x\", j);\n    }\n}\nif(i === true && j === true){\n    ;\n}else{\n    if(e != i){\n        u = i;\n        flow.set(\"c\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 360,
+        "wires": [
+            [
+                "ccdf8844f105a757"
+            ]
+        ]
+    },
+    {
+        "id": "e2f8f5f33225db93",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto I",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\nuscita.topic = \"/indietro\";\n\ni = flow.get(\"v\") || false;\nj = flow.get(\"b\") || false;\ne = flow.get(\"n\") || false;\n\nif(msg.topic === \"A\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"v\", i);\n    }\n}\nif(msg.topic === \"I\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"b\", j);\n    }\n}\nif(i === true && j === true){\n    ;\n}else{\n    if(e != j){\n        u = j;\n        flow.set(\"n\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}\n/*\nvar q;\nvar w;\nvar e;\nvar uscita1 = {};\nuscita1.topic = \"sinistra\";\n\nq = flow.get(\"q\") || false;\nw = flow.get(\"w\") || false;\ne = flow.get(\"e\") || false;\n\nif(msg.topic === \"D\"){\n    if(q != msg.payload){\n        q  = msg.payload;\n        flow.set(\"q\", q);\n    }\n}\nif(msg.topic === \"S\"){\n    if(w != msg.payload){\n        w  = msg.payload;\n        flow.set(\"w\", w);\n    }\n}\nif(q === true && w === true){\n    if(e === false && w ===true || e === true && w ===true){\n        e = false;\n        flow.set(\"e\", e);\n        uscita1.payload = e;\n        return uscita1;\n    }\n}else{\n    if(e != w){\n        e = w;\n        flow.set(\"e\", e);\n    }\n}*/",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "b9d16b096c274855"
+            ]
+        ]
+    },
+    {
+        "id": "c095efbebc9fd804",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto A",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\n//uscita.topic = \"/avanti\";\n\ni = flow.get(\"z\") || false;\nj = flow.get(\"x\") || false;\ne = flow.get(\"c\") || false;\n\nif(msg.topic === \"A\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"z\", i);\n    }\n}\nif(msg.topic === \"I\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"x\", j);\n    }\n}\nif(i === true && j === true){\n    if(e === false && i ===true){\n        u = false;\n        flow.set(\"c\", u);\n        uscita.payload = u;\n        return uscita;\n    }else{\n        if(e === true && i === true){\n            u = true;\n            flow.set(\"c\", u);\n            uscita.payload = u;\n            return uscita;\n        }\n    }\n}else{\n    if(e != i){\n        u = i;\n        flow.set(\"c\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 400,
+        "wires": [
+            [
+                "40acc463fe384d95"
+            ]
+        ]
+    },
+    {
+        "id": "52e97e51f6adb7fc",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "confronto I",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\n//uscita.topic = \"/indietro\";\n\ni = flow.get(\"v\") || false;\nj = flow.get(\"b\") || false;\ne = flow.get(\"n\") || false;\n\nif(msg.topic === \"A\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"v\", i);\n    }\n}\nif(msg.topic === \"I\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"b\", j);\n    }\n}\nif(i === true && j === true){\n    if(e === false && j ===true){\n        u = false;\n        flow.set(\"n\", u);\n        uscita.payload = u;\n        return uscita;\n    }else{\n        if(e === true && j === true){\n            u = true;\n            flow.set(\"n\", u);\n            uscita.payload = u;\n            return uscita;\n        }\n    }\n}else{\n    if(e != j){\n        u = j;\n        flow.set(\"n\", u);\n        uscita.payload = u;\n        return uscita;\n    }\n}\n/*\nvar q;\nvar w;\nvar e;\nvar uscita1 = {};\nuscita1.topic = \"sinistra\";\n\nq = flow.get(\"q\") || false;\nw = flow.get(\"w\") || false;\ne = flow.get(\"e\") || false;\n\nif(msg.topic === \"D\"){\n    if(q != msg.payload){\n        q  = msg.payload;\n        flow.set(\"q\", q);\n    }\n}\nif(msg.topic === \"S\"){\n    if(w != msg.payload){\n        w  = msg.payload;\n        flow.set(\"w\", w);\n    }\n}\nif(q === true && w === true){\n    if(e === false && w ===true || e === true && w ===true){\n        e = false;\n        flow.set(\"e\", e);\n        uscita1.payload = e;\n        return uscita1;\n    }\n}else{\n    if(e != w){\n        e = w;\n        flow.set(\"e\", e);\n    }\n}*/",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 300,
+        "wires": [
+            [
+                "a12efefdebd43931"
+            ]
+        ]
+    },
+    {
+        "id": "e5a4ee71e060da99",
+        "type": "debug",
+        "z": "2296e757fad8c885",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f8094d37268d431d",
+        "type": "debug",
+        "z": "2296e757fad8c885",
+        "name": "2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "5946d60dddb08e77",
+        "type": "function",
+        "z": "2296e757fad8c885",
+        "name": "stop",
+        "func": "var i;\nvar j;\nvar u;\nvar e;\nvar uscita = {};\nuscita.topic = \"/stop\";\n\ni = flow.get(\"l\") || false;\nj = flow.get(\"k\") || false;\ne = flow.get(\"m\") || false;\n\nif(msg.topic === \"A\"){\n    if(i != msg.payload){\n        i  = msg.payload;\n        flow.set(\"l\", i);\n    }\n}\nif(msg.topic === \"I\"){\n    if(j != msg.payload){\n        j  = msg.payload;\n        flow.set(\"k\", j);\n    }\n}\nif(i === true || j === true){\n    u = false;\n    flow.set(\"m\", u);\n    uscita.payload = u;\n    return uscita;\n}else{\n    u = true;\n    flow.set(\"m\", u);\n    uscita.payload = u;\n    return uscita;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 440,
+        "wires": [
+            [
+                "10e22a14bf6d15d9"
+            ]
+        ]
+    },
+    {
+        "id": "6f402e811bc96fa5",
+        "type": "ui_spacer",
+        "z": "2296e757fad8c885",
+        "name": "spacer",
+        "group": "919650688490a5f5",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "b20e71974009fe5a",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "cow.rmq2.cloudamqp.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "333a6f68de210d7c",
+        "type": "ui_group",
+        "name": "start e stop",
+        "tab": "80af388a02b97641",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "92d87d4d9334b07f",
+        "type": "ui_group",
+        "name": "svolta",
+        "tab": "80af388a02b97641",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "33bf04ac409b7c6c",
+        "type": "ui_group",
+        "name": "sensori",
+        "tab": "80af388a02b97641",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "80af388a02b97641",
+        "type": "ui_tab",
+        "name": "Comandi",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
