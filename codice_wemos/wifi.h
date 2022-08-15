@@ -1,8 +1,8 @@
-const char* ssid = "NETGEAR34_EXT";
-const char* password = "happyboat573";
-const char* mqtt_server = "cow.rmq2.cloudamqp.com";
-const char* mqtt_us = "qmhkhrof:qmhkhrof";
-const char* mqtt_pass = "VrHnItPDsK032chzcxUMJ0eovpZ5OvSp";
+const char* ssid = "";
+const char* password = "";
+const char* mqtt_server = "";
+const char* mqtt_us = "";
+const char* mqtt_pass = "";
 
 unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE  (50)
