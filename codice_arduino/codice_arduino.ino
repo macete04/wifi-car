@@ -1,4 +1,3 @@
-#include <Servo.h>
 #define MOTOR_PIN_D1 3  // right motor_1 pin
 #define MOTOR_PIN_D2 9  // right motor_2 pin
 #define MOTOR_PIN_S1 10 // lesft motor_1 pin
@@ -23,19 +22,20 @@
 #define M_STOP 0 // stop speed of the motors
 #define VEL 127 // constant speed of the motors
 
-  bool av = LOW;
-  bool in = LOW;
-  bool de = LOW;
-  bool si = LOW;
-  bool s = LOW;
+  bool av = LOW; // variable for wemos signal reception
+  bool in = LOW; // variable for wemos signal reception
+  bool de = LOW; // variable for wemos signal reception
+  bool si = LOW; // variable for wemos signal reception
+  bool s = LOW; // variable for wemos signal reception
 
-void indietro();
-void dritto();
-void destra();
-void sinistra();
-void Stop();
+void indietro();  // function prototype back, serves to make go back
+void dritto();  // straight function prototype, serves to move forward
+void destra();  // right function prototype, serves to make it go right
+void sinistra();  // left function prototype, serves to make left go
+void Stop();  // stop function prototype, it is used to make it stop
 
 void setup() {
+  // pin mode setting
   pinMode(MOTOR_PIN_D1, OUTPUT);
   pinMode(MOTOR_PIN_D2, OUTPUT);
   pinMode(MOTOR_PIN_S1, OUTPUT);
@@ -56,37 +56,40 @@ void setup() {
   pinMode(INDIETRO, INPUT);
   pinMode(DESTRA, INPUT);
   pinMode(SINISTRA, INPUT);
+  // pin mode setting
 
-  Serial.begin(9600);
+  Serial.begin(9600); // initialization of the serial
 }
 
 void loop() {
-  av = digitalRead(AVANTI);
+  //polling function for reading the signals received from the wemos card
+  av = digitalRead(AVANTI); 
   s = digitalRead(STOP);
   in = digitalRead(INDIETRO);
   de = digitalRead(DESTRA);
   si = digitalRead(SINISTRA);
+  //polling function for reading the signals received from the wemos card
 
   if(av == HIGH){
-    dritto();
+    dritto(); // call of the function if the signal is positive
   }
   if(s == HIGH){
-    Stop();
+    Stop(); // call of the function if the signal is positive
   }
   if(de == HIGH){
-    destra();
+    destra(); // call of the function if the signal is positive
   }
   if(si == HIGH){
-    sinistra();
+    sinistra(); // call of the function if the signal is positive
   }
   if(in == HIGH){
-    indietro();
+    indietro(); // call of the function if the signal is positive
   }
 }
 
 
 
-void Stop(){
+void Stop(){//speed setting = 0 on the motors
   analogWrite(MOTOR_PIN_D1, M_STOP);
   analogWrite(MOTOR_PIN_D2, M_STOP);
   analogWrite(MOTOR_PIN_S1, M_STOP);
@@ -94,16 +97,18 @@ void Stop(){
 }
 
 void indietro(){
+  // setting of the running direction of the motors
   digitalWrite(SENSO_2_PIN_D1, HIGH);
   digitalWrite(SENSO_2_PIN_D2, LOW);
   digitalWrite(SENSO_2_PIN_S1, LOW);
- digitalWrite(SENSO_2_PIN_S2, HIGH);
-
+  digitalWrite(SENSO_2_PIN_S2, HIGH);
+  
   digitalWrite(SENSO_1_PIN_D1, LOW);
   digitalWrite(SENSO_1_PIN_D2, HIGH);
   digitalWrite(SENSO_1_PIN_S1, HIGH);
   digitalWrite(SENSO_1_PIN_S2, LOW);
-  
+  // setting of the running direction of the motors
+  // speed setting = 127 on motors
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
   analogWrite(MOTOR_PIN_S1, VEL);
@@ -111,6 +116,7 @@ void indietro(){
 }
 
 void sinistra(){
+  // setting of the running direction of the motors
   digitalWrite(SENSO_2_PIN_D1, LOW);
   digitalWrite(SENSO_2_PIN_D2, HIGH);
   digitalWrite(SENSO_2_PIN_S1, LOW);
@@ -120,7 +126,8 @@ void sinistra(){
   digitalWrite(SENSO_1_PIN_D2, LOW);
   digitalWrite(SENSO_1_PIN_S1, HIGH);
   digitalWrite(SENSO_1_PIN_S2, LOW);
-  
+  // setting of the running direction of the motors
+  // speed setting = 127 on motors
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
   analogWrite(MOTOR_PIN_S1, VEL);
@@ -128,6 +135,7 @@ void sinistra(){
 }
 
 void destra(){
+  // setting of the running direction of the motors
   digitalWrite(SENSO_2_PIN_D1, HIGH);
   digitalWrite(SENSO_2_PIN_D2, LOW);
   digitalWrite(SENSO_2_PIN_S1, HIGH);
@@ -137,13 +145,15 @@ void destra(){
   digitalWrite(SENSO_1_PIN_D2, HIGH);
   digitalWrite(SENSO_1_PIN_S1, LOW);
   digitalWrite(SENSO_1_PIN_S2, HIGH);
-  
+  // setting of the running direction of the motors
+  // speed setting = 127 on motors
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
   analogWrite(MOTOR_PIN_S1, VEL);
   analogWrite(MOTOR_PIN_S2, VEL);
 }
 void dritto(){
+  // setting of the running direction of the motors
   digitalWrite(SENSO_2_PIN_D1, LOW);
   digitalWrite(SENSO_2_PIN_D2, HIGH);
   digitalWrite(SENSO_2_PIN_S1, HIGH);
@@ -153,7 +163,8 @@ void dritto(){
   digitalWrite(SENSO_1_PIN_D2, LOW);
   digitalWrite(SENSO_1_PIN_S1, LOW);
   digitalWrite(SENSO_1_PIN_S2, HIGH);
-  
+  // setting of the running direction of the motors
+  // speed setting = 127 on motors
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
   analogWrite(MOTOR_PIN_S1, VEL);

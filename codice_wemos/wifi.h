@@ -1,17 +1,11 @@
-const char* ssid = "";
-const char* password = "";
-const char* mqtt_server = "";
-const char* mqtt_us = "";
-const char* mqtt_pass = "";
-
 unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE  (50)
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
-void callback(char* topic, byte* payload, unsigned int length);
-void setup_wifi();
-void riconnessione();
+void callback(char* topic, byte* payload, unsigned int length); // callback function prototype
+void setup_wifi();  // setup_wifi function prototype, required to connect to the WiFi network
+void riconnessione(); // riconnessione function prototypeneeded to connect to the mqtt server
 
 void setup_wifi() {
   delay(10);
@@ -39,17 +33,21 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
+  // variables for controlling the signals to be sent to the arduino
   bool stato_avanti = true;
   bool stato_indietro = true;
   bool stato_destra = true;
   bool stato_sinistra = true;
   bool stato_Stop = true;
-  String msg;
+  // variables for controlling the signals to be sent to the arduino
+  
+  String msg; // message received from the server
   for (int i = 0; i < length; i++) {
     msg +=(char)payload[i];
   }
   Serial.println(msg);
 
+// compares the received message with the one we need makes the function call with the help of command variables
   if(strcmp(topic, "/avanti") == 0){
     if(msg == "true"){
       avanti(stato_avanti);
@@ -85,6 +83,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       Stop(!stato_Stop);
     }
   }
+// compares the received message with the one we need makes the function call with the help of command variables
 }
 
 void reconnect() {
@@ -97,8 +96,8 @@ void reconnect() {
     // Attempt to connect
     if (client.connect("macchinina",  mqtt_us, mqtt_pass)) {
       Serial.println("connected");
-      // Once connected, publish an announcement...
-      // ... and resubscribe
+      
+      // subscription to mqtt topics
       client.subscribe("/avanti");
       client.subscribe("/indietro");
       client.subscribe("/destra");
@@ -106,6 +105,7 @@ void reconnect() {
       client.subscribe("/ostacolo");
       client.subscribe("/Ultrasuoni");
       client.subscribe("/stop");
+      // subscription to mqtt topics
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
