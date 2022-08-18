@@ -1,27 +1,27 @@
 #include <Servo.h>
-#define MOTOR_PIN_D1 3
-#define MOTOR_PIN_D2 9
-#define MOTOR_PIN_S1 10
-#define MOTOR_PIN_S2 11
+#define MOTOR_PIN_D1 3  // right motor_1 pin
+#define MOTOR_PIN_D2 9  // right motor_2 pin
+#define MOTOR_PIN_S1 10 // lesft motor_1 pin
+#define MOTOR_PIN_S2 11 // lesft motor_2 pin
 
-#define SENSO_A_PIN_D1 5
-#define SENSO_I_PIN_D1 2
-#define SENSO_A_PIN_D2 4
-#define SENSO_I_PIN_D2 18
+#define SENSO_1_PIN_D1 5  // right motor_1 direction_1 pin
+#define SENSO_2_PIN_D1 2  // right motor_1 direction_2 pin
+#define SENSO_1_PIN_D2 4  // right motor_2 direction_1 pin
+#define SENSO_2_PIN_D2 18 // right motor_2 direction_2 pin
 
-#define SENSO_A_PIN_S1 17
-#define SENSO_I_PIN_S1 16
-#define SENSO_A_PIN_S2 15
-#define SENSO_I_PIN_S2 14
+#define SENSO_1_PIN_S1 17 // left motor_1 direction_1 pin
+#define SENSO_2_PIN_S1 16 // left motor_1 direction_2 pin
+#define SENSO_1_PIN_S2 15 // left motor_2 direction_1 pin
+#define SENSO_2_PIN_S2 14 // left motor_2 direction_2 pin
 
-#define AVANTI 13
-#define STOP 12
-#define INDIETRO 8
-#define DESTRA 7
-#define SINISTRA 6
+#define AVANTI 13 // pin connected to pin D3 of the wemos board
+#define STOP 12 // pin connected to pin D4 of the wemos board
+#define INDIETRO 8 // pin connected to pin D5 of the wemos board
+#define DESTRA 7 // pin connected to pin D6 of the wemos board
+#define SINISTRA 6 // pin connected to pin D7 of the wemos board
 
-#define M_STOP 0
-#define VEL 127
+#define M_STOP 0 // stop speed of the motors
+#define VEL 127 // constant speed of the motors
 
   bool av = LOW;
   bool in = LOW;
@@ -41,15 +41,15 @@ void setup() {
   pinMode(MOTOR_PIN_S1, OUTPUT);
   pinMode(MOTOR_PIN_S2, OUTPUT);
 
-  pinMode(SENSO_A_PIN_D1, OUTPUT);
-  pinMode(SENSO_I_PIN_D1, OUTPUT);
-  pinMode(SENSO_A_PIN_D2, OUTPUT);
-  pinMode(SENSO_I_PIN_D2, OUTPUT);
+  pinMode(SENSO_1_PIN_D1, OUTPUT);
+  pinMode(SENSO_2_PIN_D1, OUTPUT);
+  pinMode(SENSO_1_PIN_D2, OUTPUT);
+  pinMode(SENSO_2_PIN_D2, OUTPUT);
 
-  pinMode(SENSO_A_PIN_S1, OUTPUT);
-  pinMode(SENSO_I_PIN_S1, OUTPUT);
-  pinMode(SENSO_A_PIN_S2, OUTPUT);
-  pinMode(SENSO_I_PIN_S2, OUTPUT);
+  pinMode(SENSO_1_PIN_S1, OUTPUT);
+  pinMode(SENSO_2_PIN_S1, OUTPUT);
+  pinMode(SENSO_1_PIN_S2, OUTPUT);
+  pinMode(SENSO_2_PIN_S2, OUTPUT);
 
   pinMode(AVANTI, INPUT);
   pinMode(STOP, INPUT);
@@ -82,41 +82,6 @@ void loop() {
   if(in == HIGH){
     indietro();
   }
-  /*int i = 0;
-  while(i < 1){
-    dritto();
-    i++;
-    //Serial.println(i);
-  }
-  delay(5000);
-  Stop();
-  delay(5000);
-  i = 0;
-  while(i < 1){
-    indietro();
-    i++;
-    //Serial.println(i);
-  }
-  delay(5000);
-  Stop();
-  delay(5000);
-  i = 0;
-  while(i < 1){
-    destra();
-    i++;
-  }
-  delay(5000);
-  Stop();
-  delay(5000);
-  i = 0;
-  while(i < 1){
-    sinistra();
-    i++;
-  }
-  delay(5000);
-  Stop();
-  delay(5000);
-  i = 0;*/
 }
 
 
@@ -129,15 +94,15 @@ void Stop(){
 }
 
 void indietro(){
-  digitalWrite(SENSO_I_PIN_D1, HIGH);
-  digitalWrite(SENSO_I_PIN_D2, LOW);
-  digitalWrite(SENSO_I_PIN_S1, LOW);
- digitalWrite(SENSO_I_PIN_S2, HIGH);
+  digitalWrite(SENSO_2_PIN_D1, HIGH);
+  digitalWrite(SENSO_2_PIN_D2, LOW);
+  digitalWrite(SENSO_2_PIN_S1, LOW);
+ digitalWrite(SENSO_2_PIN_S2, HIGH);
 
-  digitalWrite(SENSO_A_PIN_D1, LOW);
-  digitalWrite(SENSO_A_PIN_D2, HIGH);
-  digitalWrite(SENSO_A_PIN_S1, HIGH);
-  digitalWrite(SENSO_A_PIN_S2, LOW);
+  digitalWrite(SENSO_1_PIN_D1, LOW);
+  digitalWrite(SENSO_1_PIN_D2, HIGH);
+  digitalWrite(SENSO_1_PIN_S1, HIGH);
+  digitalWrite(SENSO_1_PIN_S2, LOW);
   
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
@@ -146,15 +111,15 @@ void indietro(){
 }
 
 void sinistra(){
-  digitalWrite(SENSO_I_PIN_D1, LOW);
-  digitalWrite(SENSO_I_PIN_D2, HIGH);
-  digitalWrite(SENSO_I_PIN_S1, LOW);
-  digitalWrite(SENSO_I_PIN_S2, HIGH);
+  digitalWrite(SENSO_2_PIN_D1, LOW);
+  digitalWrite(SENSO_2_PIN_D2, HIGH);
+  digitalWrite(SENSO_2_PIN_S1, LOW);
+  digitalWrite(SENSO_2_PIN_S2, HIGH);
 
-  digitalWrite(SENSO_A_PIN_D1, HIGH);
-  digitalWrite(SENSO_A_PIN_D2, LOW);
-  digitalWrite(SENSO_A_PIN_S1, HIGH);
-  digitalWrite(SENSO_A_PIN_S2, LOW);
+  digitalWrite(SENSO_1_PIN_D1, HIGH);
+  digitalWrite(SENSO_1_PIN_D2, LOW);
+  digitalWrite(SENSO_1_PIN_S1, HIGH);
+  digitalWrite(SENSO_1_PIN_S2, LOW);
   
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
@@ -163,15 +128,15 @@ void sinistra(){
 }
 
 void destra(){
-  digitalWrite(SENSO_I_PIN_D1, HIGH);
-  digitalWrite(SENSO_I_PIN_D2, LOW);
-  digitalWrite(SENSO_I_PIN_S1, HIGH);
-  digitalWrite(SENSO_I_PIN_S2, LOW);
+  digitalWrite(SENSO_2_PIN_D1, HIGH);
+  digitalWrite(SENSO_2_PIN_D2, LOW);
+  digitalWrite(SENSO_2_PIN_S1, HIGH);
+  digitalWrite(SENSO_2_PIN_S2, LOW);
 
-  digitalWrite(SENSO_A_PIN_D1, LOW);
-  digitalWrite(SENSO_A_PIN_D2, HIGH);
-  digitalWrite(SENSO_A_PIN_S1, LOW);
-  digitalWrite(SENSO_A_PIN_S2, HIGH);
+  digitalWrite(SENSO_1_PIN_D1, LOW);
+  digitalWrite(SENSO_1_PIN_D2, HIGH);
+  digitalWrite(SENSO_1_PIN_S1, LOW);
+  digitalWrite(SENSO_1_PIN_S2, HIGH);
   
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
@@ -179,15 +144,15 @@ void destra(){
   analogWrite(MOTOR_PIN_S2, VEL);
 }
 void dritto(){
-  digitalWrite(SENSO_I_PIN_D1, LOW);
-  digitalWrite(SENSO_I_PIN_D2, HIGH);
-  digitalWrite(SENSO_I_PIN_S1, HIGH);
-  digitalWrite(SENSO_I_PIN_S2, LOW);
+  digitalWrite(SENSO_2_PIN_D1, LOW);
+  digitalWrite(SENSO_2_PIN_D2, HIGH);
+  digitalWrite(SENSO_2_PIN_S1, HIGH);
+  digitalWrite(SENSO_2_PIN_S2, LOW);
 
-  digitalWrite(SENSO_A_PIN_D1, HIGH);
-  digitalWrite(SENSO_A_PIN_D2, LOW);
-  digitalWrite(SENSO_A_PIN_S1, LOW);
-  digitalWrite(SENSO_A_PIN_S2, HIGH);
+  digitalWrite(SENSO_1_PIN_D1, HIGH);
+  digitalWrite(SENSO_1_PIN_D2, LOW);
+  digitalWrite(SENSO_1_PIN_S1, LOW);
+  digitalWrite(SENSO_1_PIN_S2, HIGH);
   
   analogWrite(MOTOR_PIN_D1, VEL);
   analogWrite(MOTOR_PIN_D2, VEL);
