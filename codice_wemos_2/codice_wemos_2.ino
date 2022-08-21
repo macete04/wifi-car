@@ -20,13 +20,18 @@
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <SoftwareSerial.h>
 #include "costanti.h"
 #include "motori.h"
 #include "wifi.h"
 #include "sensori.h"
 
 void setup() {
-  Serial.begin(57600);
+  pinMode(SOFTRX, INPUT);
+  pinMode(SOFTTX, OUTPUT);
+  
+  Serial.begin(9600);
+  serial2.begin(9600);
   //pinMode(ECHO, INPUT);
   //pinMode(TRIGGER, OUTPUT);
   //servo1.attach(A5);
@@ -34,12 +39,11 @@ void setup() {
   setup_wifi();
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
-  Setup_M();
 }
 
 void loop() {
   if (!client.connected()) {
-    reconnect();
+    riconnessione();
   }
   client.loop();
   

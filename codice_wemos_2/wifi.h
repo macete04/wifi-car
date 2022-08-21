@@ -1,8 +1,8 @@
-const char* ssid = "";
-const char* password = "";
-const char* mqtt_server = "";
-const char* mqtt_us = "";
-const char* mqtt_pass = "";
+const char* ssid = "NETGEAR34_EXT";
+const char* password = "happyboat573";
+const char* mqtt_server = "cow.rmq2.cloudamqp.com";
+const char* mqtt_us = "qmhkhrof:qmhkhrof";
+const char* mqtt_pass = "VrHnItPDsK032chzcxUMJ0eovpZ5OvSp";
 
 unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE  (50)
@@ -15,24 +15,24 @@ void riconnessione();
 
 void setup_wifi() {
   delay(10);
-  if(debug == true){
-  // We start by connecting to a WiFi network
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+  if (debug == true) {
+    // We start by connecting to a WiFi network
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
   }
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    if(debug == true){
+    if (debug == true) {
       Serial.print(".");
     }
   }
 
   randomSeed(micros());
-  if(debug == true){
+  if (debug == true) {
     Serial.println("");
     Serial.println("WiFi connected");
     Serial.println("IP address: ");
@@ -41,43 +41,104 @@ void setup_wifi() {
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  if(debug == true){
+  if (debug == true) {
     Serial.print("Message arrived [");
     Serial.print(topic);
     Serial.print("] ");
   }
   String msg;
+  String dir;
+  String ver;
+  byte e;
+  int primo_numero;
+  int secondo_numero;
+  int terzo_numero;
   for (int i = 0; i < length; i++) {
-    msg +=(char)payload[i];
+    msg += (char)payload[i];
   }
-  if(debug == true){
-    Serial.println(msg);
+  for (int i = 14; i < 17; i++) {
+    dir += msg[i];
+  }
+  for (int i = 45; i < 48; i++) {
+    int a = bitRead(msg[i], 0);
+    int b = bitRead(msg[i], 1);
+    int c = bitRead(msg[i], 2);
+    int d = bitRead(msg[i], 3);
+    if(a == 1){
+      bitSet(e, 0);
+    }
+    if(b == 1){
+      bitSet(e, 1);
+    }
+    if(c == 1){
+      bitSet(e, 2);
+    }
+    if(d == 1){
+      bitSet(e, 3);
+    }
+    switch(i){
+      case 45:
+        primo_numero = e *100;
+        break;
+      case 46:
+        secondo_numero = e *10;
+        break;
+      case 47:
+        terzo_numero = e;
+        break;
+    }
+    e = 0;
+  }
+  int vel = primo_numero + secondo_numero + terzo_numero;
+  for (int i = 28; i < 31; i++) {
+    ver += msg[i];
   }
 
-  if(strcmp(topic, "/movimento") == 0){
-    int vel = map(payload.distanza, 0.0, 100.0, 0, 255);
+  if (debug == true) {
+    Serial.println(msg);
+    Serial.println(ver);
     Serial.println(vel);
-    if(payload.direzione == "destra"){
-      Serial.println("destra");
-    }else{
-      if(payload.direzione == "sinstra"){
-        Serial.println("sinistra");
+    Serial.println(dir);
+  }
+
+  if (strcmp(topic, "/movimento") == 0) {
+    
+    serial2.write(vel);
+    //Serial.println(vel);
+    delay(10);
+    if (dir == "des") {
+      int right = 103;
+      //serial2.write(right);
+      //Serial.println(right);
+      delay(10);
+    } else {
+      if (dir == "sin") {
+        int left = 104;
+        //serial2.write(left);
+        //Serial.println(left);
+        delay(10);
       }
     }
-    if(payload.verso == "avanti"){
-      Serial.println("avanti");
-    }else{
-      if(payload.verso == "indietro"){
-        Serial.println("indietro");
+    if (ver == "ava") {
+      int forward = 101;
+      serial2.write(forward);
+      //Serial.println(forward);
+      delay(10);
+    } else {
+      if (ver == "ind") {
+        int back = 102;
+        serial2.write(back);
+        //Serial.println(back);
+        delay(10);
       }
     }
-  } 
+  }
 }
 
-void reconnect() {
+void riconnessione() {
   // Loop until we're reconnected
   while (!client.connected()) {
-    if(debug == true){
+    if (debug == true) {
       Serial.print("Attempting MQTT connection...");
     }
     // Create a random client ID
@@ -85,7 +146,7 @@ void reconnect() {
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
     if (client.connect("macchinina",  mqtt_us, mqtt_pass)) {
-      if(debug == true){
+      if (debug == true) {
         Serial.println("connected");
       }
       // Once connected, publish an announcement...
@@ -94,7 +155,7 @@ void reconnect() {
       client.subscribe("/ostacolo");
       client.subscribe("/Ultrasuoni");
     } else {
-      if(debug == true){
+      if (debug == true) {
         Serial.print("failed, rc=");
         Serial.print(client.state());
         Serial.println(" try again in 5 seconds");

@@ -18,15 +18,13 @@
 #define SOFTRX 7
 #define SOFTTX 8
 
-#define M_STOP 0
-
 SoftwareSerial serial2(SOFTRX, SOFTTX);
 
-void indietro(int);
-void dritto(int);
-void destra(int);
-void sinistra(int);
-//void Stop();
+void indietro();
+void dritto();
+void destra();
+void sinistra();
+void v_motor(int);
 
 void setup() {
   pinMode(MOTOR_PIN_D1, OUTPUT);
@@ -48,28 +46,37 @@ void setup() {
   pinMode(SOFTTX, OUTPUT);
 
   delay(2000);
-  
-  Serial.begin(57600);
-  serial2.begin(57600);
+
+  Serial.begin(9600);
+  serial2.begin(9600);
 
   delay(2000);
 }
 
 void loop() {
-  if(serial2.available()){
-    int vel = serial2.read(); 
-    if(serial2.read() == "avanti"){
-    dritto(vel);
-    }else{
-      if(serial2.read() == "indietro"){
-        indietro(vel);
-      }
-    }
-    if(serial2.read() == "destra"){
-      destra(vel);
-    }else{
-      if(serial2.read() == "indietro"){
-        sinistra(vel);
+  int msg;
+  while (serial2.available()) {
+    msg = serial2.read();
+    //Serial.println(msg);
+    if (msg >= 0 && msg <= 100) {
+      int vel = map(msg, 0, 100, 0, 255);
+      v_motor(vel);
+    } else {
+      switch (msg) {
+        case 101:
+          dritto();
+          break;
+        case 102:
+          indietro();
+          break;
+        case 103:
+          destra();
+          break;
+        case 104:
+          sinistra();
+          break;
+        default:
+          break;
       }
     }
   }
@@ -77,31 +84,28 @@ void loop() {
 
 
 
-/*void Stop(){
-  analogWrite(MOTOR_PIN_D1, M_STOP);
-  analogWrite(MOTOR_PIN_D2, M_STOP);
-  analogWrite(MOTOR_PIN_S1, M_STOP);
-  analogWrite(MOTOR_PIN_S2, M_STOP);
-}*/
+void v_motor(int vel) {
+  analogWrite(MOTOR_PIN_D1, vel);
+  analogWrite(MOTOR_PIN_D2, vel);
+  analogWrite(MOTOR_PIN_S1, vel);
+  analogWrite(MOTOR_PIN_S2, vel);
+  //Serial.println(serial2.read());
+}
 
-void indietro(int vel){
+void indietro() {
+  //Serial.println("indietro");
   digitalWrite(SENSO_I_PIN_D1, HIGH);
   digitalWrite(SENSO_I_PIN_D2, LOW);
   digitalWrite(SENSO_I_PIN_S1, LOW);
- digitalWrite(SENSO_I_PIN_S2, HIGH);
+  digitalWrite(SENSO_I_PIN_S2, HIGH);
 
   digitalWrite(SENSO_A_PIN_D1, LOW);
   digitalWrite(SENSO_A_PIN_D2, HIGH);
   digitalWrite(SENSO_A_PIN_S1, HIGH);
   digitalWrite(SENSO_A_PIN_S2, LOW);
-  
-  analogWrite(MOTOR_PIN_D1, vel);
-  analogWrite(MOTOR_PIN_D2, vel);
-  analogWrite(MOTOR_PIN_S1, vel);
-  analogWrite(MOTOR_PIN_S2, vel);
 }
 
-void sinistra(int vel){
+void sinistra() {
   digitalWrite(SENSO_I_PIN_D1, LOW);
   digitalWrite(SENSO_I_PIN_D2, HIGH);
   digitalWrite(SENSO_I_PIN_S1, LOW);
@@ -111,14 +115,9 @@ void sinistra(int vel){
   digitalWrite(SENSO_A_PIN_D2, LOW);
   digitalWrite(SENSO_A_PIN_S1, HIGH);
   digitalWrite(SENSO_A_PIN_S2, LOW);
-  
-  analogWrite(MOTOR_PIN_D1, vel);
-  analogWrite(MOTOR_PIN_D2, vel);
-  analogWrite(MOTOR_PIN_S1, vel);
-  analogWrite(MOTOR_PIN_S2, vel);
 }
 
-void destra(int vel){
+void destra() {
   digitalWrite(SENSO_I_PIN_D1, HIGH);
   digitalWrite(SENSO_I_PIN_D2, LOW);
   digitalWrite(SENSO_I_PIN_S1, HIGH);
@@ -128,13 +127,10 @@ void destra(int vel){
   digitalWrite(SENSO_A_PIN_D2, HIGH);
   digitalWrite(SENSO_A_PIN_S1, LOW);
   digitalWrite(SENSO_A_PIN_S2, HIGH);
-  
-  analogWrite(MOTOR_PIN_D1, vel);
-  analogWrite(MOTOR_PIN_D2, vel);
-  analogWrite(MOTOR_PIN_S1, vel);
-  analogWrite(MOTOR_PIN_S2, vel);
+
 }
-void dritto(int vel){
+void dritto() {
+  //Serial.println("dritto");
   digitalWrite(SENSO_I_PIN_D1, LOW);
   digitalWrite(SENSO_I_PIN_D2, HIGH);
   digitalWrite(SENSO_I_PIN_S1, HIGH);
@@ -144,9 +140,4 @@ void dritto(int vel){
   digitalWrite(SENSO_A_PIN_D2, LOW);
   digitalWrite(SENSO_A_PIN_S1, LOW);
   digitalWrite(SENSO_A_PIN_S2, HIGH);
-  
-  analogWrite(MOTOR_PIN_D1, vel);
-  analogWrite(MOTOR_PIN_D2, vel);
-  analogWrite(MOTOR_PIN_S1, vel);
-  analogWrite(MOTOR_PIN_S2, vel);
 }
