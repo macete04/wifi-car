@@ -1,8 +1,8 @@
-const char* ssid = "NETGEAR34_EXT";
-const char* password = "happyboat573";
-const char* mqtt_server = "cow.rmq2.cloudamqp.com";
-const char* mqtt_us = "qmhkhrof:qmhkhrof";
-const char* mqtt_pass = "VrHnItPDsK032chzcxUMJ0eovpZ5OvSp";
+const char* ssid = "";
+const char* password = "";
+const char* mqtt_server = "";
+const char* mqtt_us = "";
+const char* mqtt_pass = "";
 
 unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE  (50)
@@ -145,7 +145,7 @@ void riconnessione() {
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect("macchinina",  mqtt_us, mqtt_pass)) {
+    if (client.connect("",  mqtt_us, mqtt_pass)) {
       if (debug == true) {
         Serial.println("connected");
       }
